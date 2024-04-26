@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react';
 import HomeCard from "@/Components/HomeCard";
 import Navbar from "@/Components/Navbar";
