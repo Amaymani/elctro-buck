@@ -15,7 +15,7 @@ const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imag
     <div className='flex justify-center my-7'>
             <div className='flex h-auto bg-white w-[90vb] rounded-2xl shadow-lg'>
                 <div className='image h-72 w-auto border-r-gray-300 border-r-2'>
-                    <Image className='w-full h-full object-cover' src={`/appliances/${imageNo}.png`} alt="bulb" width={150} height={150}/>
+                    <Image className='w-full h-full object-cover' src={`/${imageNo}.png`} alt="bulb" width={150} height={150}/>
                 </div>
                 <div className='flex flex-col w-full'>
                     <div className='flex justify-end items-center bg-sky-200'>

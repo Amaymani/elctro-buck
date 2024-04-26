@@ -36,7 +36,7 @@ export default function Home() {
         <HomeCard 
           key={appliance.id}
           appliance={appliance.id} 
-          image={`/appliances/${appliance.imageNo}.png`} // Adjust the path to your images
+          image={`/${appliance.imageNo}.png`} // Adjust the path to your images
           alt={appliance.id}
         />
         ))}
