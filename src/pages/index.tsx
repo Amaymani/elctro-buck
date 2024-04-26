@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
-import HomeCard from "@/Components/HomeCard";
-import Navbar from "@/Components/Navbar";
+import HomeCard from "@/components/HomeCard";
+import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { db } from "@/config";
 import { ref, onValue, off } from "firebase/database";

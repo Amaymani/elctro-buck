@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import Navbar from '@/Components/Navbar'
-import TrackCard from '@/Components/TrackCard'
+import Navbar from '@/components/Navbar'
+import TrackCard from '@/components/TrackCard'
 import { db } from "@/config";
 import { ref, onValue, off } from "firebase/database";
 import { useEffect, useState } from 'react';
