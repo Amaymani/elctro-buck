@@ -63,7 +63,8 @@ void setup() {
   firebase.setFloat("appliance/LED1/voltage", dvol);
   firebase.setFloat("appliance/LED1/power", dpow);
   current=dcur;
-  voltage=dvol; // Corrected variable name
+  voltage=dvol;
+  kWh=dpow; // Corrected variable name
   delay(5000);
 }
 
