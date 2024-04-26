@@ -36,7 +36,7 @@ const Track = () => {
         appliance={appliance.id}
         status='fine'
         unit={appliance.power} 
-        amount={appliance.power*5.7}
+        amount={appliance.power*6.3}
         imageNo={appliance.imageNo}/>
       ))}
     </div>

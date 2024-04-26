@@ -9,7 +9,7 @@ interface TrackCardProps{
     imageNo: number;
 }
 
-const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imageNo}) => {
+const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imageNo})=> {
   return (
     <div className='flex justify-center my-7'>
             <div className='flex h-auto bg-white w-[90vb] rounded-2xl shadow-lg'>
@@ -24,7 +24,7 @@ const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imag
                     <div className='flex justify-evenly items-center h-full'>
                     <div className='flex w-full justify-center h-full items-center text-6xl font-bold text-[#03658C]'>{appliance}</div>
                     <div className='flex flex-col justify-center items-center w-full'>
-                        <div className='text-xl font-semibold text-red-600'>{unit} KW</div>
+                        <div className='text-xl font-semibold text-red-600'>{unit} KWh</div>
                         <div className='text-xl font-semibold'>Unit spent</div>
                     </div>
                     <div className='flex flex-col justify-center items-center w-full'>

@@ -1,19 +1,36 @@
 #include <ESP32Firebase.h>
 
-#define _SSID "HimanshuBsdk"          // Your WiFi SSID
-#define _PASSWORD "somu9999"      // Your WiFi Password
-#define REFERENCE_URL "https://electro-buck-default-rtdb.asia-southeast1.firebasedatabase.app/"  // Your Firebase project reference url
+#include "EmonLib.h"   //https://github.com/openenergymonitor/EmonLib
+#define _SSID "Samehada"          // Your WiFi SSID
+#define _PASSWORD "112345678"      // Your WiFi Password
+#define REFERENCE_URL "https://electro-buck-default-rtdb.asia-southeast1.firebasedatabase.app/"
+
+EnergyMonitor emon;
+#define vCalibration 106.8
+#define currCalibration 10
+
+float kWh = 0;
+unsigned long lastmillis = millis();
 
 Firebase firebase(REFERENCE_URL);
 float current; // Corrected variable name
 float voltage;
 float power;
+
+
+
 void setup() {
   Serial.begin(115200);
   
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
   delay(1000);
+
+  // emon.voltage(35, vCalibration, 1.7); // Voltage: input pin, calibration, phase_shift
+  // emon.current(34, currCalibration);
+
+  emon.voltage(35, vCalibration, 1.7); // Voltage: input pin, calibration, phase_shift
+  emon.current(34, currCalibration);
 
   // Connect to WiFi
   Serial.println();
@@ -38,7 +55,7 @@ void setup() {
 
   float dcur=firebase.getFloat("appliance/LED1/current");
   float dvol=firebase.getFloat("appliance/LED1/voltage");
-  float dpow=dcur*dvol;
+  float dpow=firebase.getFloat("appliance/LED1/power");
   //================================================================//
   //================================================================//
   // Upload real-time random float to Firebase
@@ -47,24 +64,34 @@ void setup() {
   firebase.setFloat("appliance/LED1/power", dpow);
   current=dcur;
   voltage=dvol; // Corrected variable name
-  delay(20000);
+  delay(5000);
 }
 
 
 void loop() {
-    current++;
-    voltage++;
-    power=current*voltage; // Corrected variable name
-    // Upload the float value to Firebase
-    firebase.setFloat("appliance/LED1/current", current);
-    firebase.setFloat("appliance/LED1/voltage", voltage);
-    firebase.setFloat("appliance/LED1/power", power); // Corrected variable name
-  
-    // Print the uploaded float value
-    Serial.print("Uploaded Power:\t");
-    Serial.println(current);
-    Serial.println(voltage);
-    Serial.println(power); // Corrected variable name
+
+    emon.calcVI(20, 2000);
+    Serial.print("Vrms: ");
+    Serial.print(emon.Vrms, 2);
+    Serial.print("V");
+    firebase.setFloat("appliance/LED1/voltage", emon.Vrms);
+
+    Serial.print("\tIrms: ");
+    Serial.print((emon.Irms)*17, 4);
+    Serial.print("A");
+    firebase.setFloat("appliance/LED1/current", emon.Irms*17);
+
+    Serial.print("\tPower: ");
+    Serial.print(emon.apparentPower, 4);
+    Serial.print("W");
+
+
+    Serial.print("\tkWh: ");
+    kWh = kWh + emon.apparentPower*(millis()-lastmillis)/3600000000.0;
+    Serial.print(kWh, 4);
+    Serial.println("kWh");
+    lastmillis = millis();
+    firebase.setFloat("appliance/LED1/power", kWh);
 
     delay(1000);
 }
