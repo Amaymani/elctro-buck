@@ -24,7 +24,7 @@ const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imag
           setBudget(data);
         });
       });
-      useEffect(() =>{
+    useEffect(() =>{
         const dbBudRef=ref(db, 'appliance/LED1');
         const fetchData = onValue(dbBudRef, (snapshot)=>{
           const data = snapshot.val();
