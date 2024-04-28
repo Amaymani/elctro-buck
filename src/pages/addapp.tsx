@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useState } from 'react';
-import Navbar from "@/components/Navbar";
+import Navbar from "@/Components/Navbar";
 import {db} from '@/config';
 import {ref, set } from "firebase/database";
 import { useRouter } from 'next/router';
