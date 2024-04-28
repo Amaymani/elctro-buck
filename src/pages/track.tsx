@@ -1,4 +1,4 @@
-'use client'
+
 import React from 'react'
 import Navbar from '@/Components/Navbar'
 import TrackCard from '@/Components/TrackCard'
