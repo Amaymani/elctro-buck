@@ -28,9 +28,20 @@ export default function Home() {
     };
   }, []);
 
+  const [budget, setBudget] = useState(0);
+  useEffect(() =>{
+    const dbBudRef=ref(db, 'budget');
+    const fetchData = onValue(dbBudRef, (snapshot)=>{
+      const data = snapshot.val();
+      console.log(data);
+      setBudget(data);
+    });
+  });
+
   return (
     <div className="flex flex-col justify-center">
-      <Navbar/>
+      <Navbar
+      budget={budget}/>
 
       {appliances.map((appliance) => (
         <HomeCard 

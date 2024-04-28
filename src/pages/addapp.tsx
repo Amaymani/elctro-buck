@@ -2,9 +2,11 @@
 import React from 'react';
 import { useState } from 'react';
 import Navbar from "@/Components/Navbar";
-import {db} from '@/config';
 import {ref, set } from "firebase/database";
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { db } from "@/config";
+import { onValue, off } from "firebase/database";
 
 function writeUserData(appName: string, imageNo: number) {
     const dbRef = ref(db, `appliance/${appName}`);
@@ -28,9 +30,20 @@ const AddApp = () => {
       writeUserData(appName, imageNo);
       router.push(`/`);
     };
+
+    const [budget, setBudget] = useState(0);
+    useEffect(() =>{
+    const dbBudRef=ref(db, 'budget');
+    const fetchData = onValue(dbBudRef, (snapshot)=>{
+      const data = snapshot.val();
+      setBudget(data);
+    });
+  });
   return (
     <div>
-        <Navbar/>
+        <Navbar
+        budget={budget}
+        />
         <h1 className="font-mono text-5xl text-center mt-7">Add Your Device</h1>
         <form className="flex flex-col justify-center" onSubmit={handleSubmit}>
             <div className='flex justify-center'>

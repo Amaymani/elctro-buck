@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 const Track = () => {
   const [appliances, setAppliances] = useState<any[]>([]);
-  const [budget, setBudget] = useState(0);
+  
 
   useEffect(() => {
     const dbRef = ref(db, 'appliance');
@@ -28,7 +28,7 @@ const Track = () => {
       off(dbRef, 'value', fetchData);
     };
   }, []);
-
+  const [budget, setBudget] = useState(0);
   useEffect(() =>{
     const dbBudRef=ref(db, 'budget');
     const fetchData = onValue(dbBudRef, (snapshot)=>{
