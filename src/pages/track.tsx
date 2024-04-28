@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 const Track = () => {
   const [appliances, setAppliances] = useState<any[]>([]);
+  const [budget, setBudget] = useState(0);
 
   useEffect(() => {
     const dbRef = ref(db, 'appliance');
@@ -23,21 +24,31 @@ const Track = () => {
         setAppliances(applianceArray);
       }
     });
-    
     return () => {
       off(dbRef, 'value', fetchData);
     };
   }, []);
+
+  useEffect(() =>{
+    const dbBudRef=ref(db, 'budget');
+    const fetchData = onValue(dbBudRef, (snapshot)=>{
+      const data = snapshot.val();
+      console.log(data);
+      setBudget(data);
+    });
+  });
   return (
     <div>
-        <Navbar/>
+        <Navbar
+        budget={budget}
+        />
         {appliances.map((appliance) => (
         <TrackCard 
         key={appliance.id}
         appliance={appliance.id}
-        status='fine'
+        status={appliance.status}
         unit={appliance.power} 
-        amount={appliance.power*6.3}
+        amount={appliance.amount}
         imageNo={appliance.imageNo}/>
       ))}
     </div>

@@ -3,7 +3,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Navbar = () => {
+
+
+interface NavbarProps {
+    budget: number;
+  }
+
+const Navbar: React.FC<NavbarProps> = ({budget})=> {
   return (
     <nav className=" bg-[#63BBF2] text-white " >
     
@@ -14,7 +20,7 @@ const Navbar = () => {
 
         <div className="flex justify-end ">
             <div className= " bg-white text-[#63BBF2] font-bold py-4 px-6 mr-2 rounded-full">
-            Rs-3000/-
+            Rs-{budget}/-
         </div>
 
     <button type="button" className="flex group justify-end py-4 px-6 mr-5 bg-sky-600 hover:bg-[#ffffff] transition-all duration-200 ease-in-out rounded-xl ">

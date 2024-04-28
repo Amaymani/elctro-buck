@@ -16,8 +16,8 @@ Firebase firebase(REFERENCE_URL);
 float current; // Corrected variable name
 float voltage;
 float power;
-
-
+String alert="alert";
+String fine ="fine";
 
 void setup() {
   Serial.begin(115200);
@@ -56,12 +56,14 @@ void setup() {
   float dcur=firebase.getFloat("appliance/LED1/current");
   float dvol=firebase.getFloat("appliance/LED1/voltage");
   float dpow=firebase.getFloat("appliance/LED1/power");
+  float dsta=firebase.getFloat("appliance/LED1/status");
   //================================================================//
   //================================================================//
   // Upload real-time random float to Firebase
   firebase.setFloat("appliance/LED1/current", dcur);
   firebase.setFloat("appliance/LED1/voltage", dvol);
   firebase.setFloat("appliance/LED1/power", dpow);
+  firebase.setFloat("appliance/LED1/status", dsta);
   current=dcur;
   voltage=dvol;
   kWh=dpow; // Corrected variable name
@@ -86,6 +88,14 @@ void loop() {
     Serial.print(emon.apparentPower, 4);
     Serial.print("W");
 
+    float damt=firebase.getFloat("appliance/LED1/amount");
+    float bud=firebase.getFloat("budget");
+    if(damt>bud){
+      firebase.setString("appliance/LED1/status", alert);
+    }
+    if(damt<bud){
+      firebase.setString("appliance/LED1/status", fine);
+    }
 
     Serial.print("\tkWh: ");
     kWh = kWh + emon.apparentPower*(millis()-lastmillis)/3600000000.0;
@@ -93,6 +103,7 @@ void loop() {
     Serial.println("kWh");
     lastmillis = millis();
     firebase.setFloat("appliance/LED1/power", kWh);
+    firebase.setFloat("appliance/LED1/amount", kWh*7);
 
     delay(1000);
 }
