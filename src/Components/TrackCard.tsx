@@ -41,7 +41,7 @@ const TrackCard: React.FC<TrackCardProps> = ({appliance,unit,amount,status, imag
                 <div className='flex flex-col w-full'>
                     <div className='flex justify-end items-center bg-sky-200'>
                         <div className='text-xl'>Status:</div>
-                        {amountState>budget?<div className='bg-red-500 font-bold text-white my-3 px-5 py-1 mx-3 rounded-2xl'>{status}</div>:<div className='bg-green-500 font-bold text-white my-3 px-5 py-1 mx-3 rounded-2xl'>{status}</div>}
+                        {status=="fine"?<div className='bg-red-500 font-bold text-white my-3 px-5 py-1 mx-3 rounded-2xl'>{status}</div>:<div className='bg-green-500 font-bold text-white my-3 px-5 py-1 mx-3 rounded-2xl'>{status}</div>}
                     </div>
                     <div className='flex justify-evenly items-center h-full'>
                     <div className='flex w-full justify-center h-full items-center text-6xl font-bold text-[#03658C]'>{appliance}</div>
